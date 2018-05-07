@@ -7,5 +7,72 @@
 		</li>
 	</ul>
 	
+	<ul class="menu settingsBlock" ng-class="settingsScreenState" ng-show="editMode">
+		<li>
+			<a style="display: -webkit-box;">
+				<div>DATAHUB</div> 
+				<div class="notConnected" ng-show="!dataHubAvailable">(No Connection)</div>
+				<img class="Connection connectionNo" ng-show="!dataHubAvailable" src="images\icons\Disconnected.png" title="No connection to DataHub"/>
+				<img class="Connection connectionOk" ng-show="dataHubAvailable" src="images\icons\Connected.png" title="Connected to DataHub"/>
+			</a>
+            <ul>
+                <li>
+					<a>
+						<div>
+							Host 
+							<input type="text" id="dhUriHost" class="host" placeholder="Host" ng-model="dataHubUriHost" ng-trim="true" ng-class="{error: hostError==true}" ng-disabled="settingsScreenState == 'readOnly'" />
+						</div>
+						<div style='margin-top:-6px;'>
+							Port 
+							<input type="text" id="dhUriPort" class="port" placeholder="Port" ng-model="dataHubUriPort" ng-trim="true" ng-class="{error: portError==true}" ng-disabled="settingsScreenState == 'readOnly'" />
+							<input type="button" class="button btnConnect" ng-click="connectDataHub()" ng-disabled="!dataHubUriValid" value="Connect" />
+							<input type="button" class="button btnChange" ng-click="changeSettings()" value="Change" />
+							<input type="button" class="button btnCancel" ng-click="cancel()" value="Cancel" />
+						</div>
+					</a>
+				</li>
+            </ul>
+        </li>
+	</ul>
 	
+	<ul class="menu dataBlock" ng-show="!editMode">
+		<li>
+			<a>SPACES
+				<select name="spaces" id="spaces" ng-options="entry.name for entry in spaces | orderBy: 'name' track by entry.id" ng-model="selectedSpace" ng-change="spaceChanged()">
+					<option value="">All</option>
+				</select>
+			</a>
+		</li>
+		<li>
+			<a>SOURCES</a>
+			<ul type='source' class="sourcesList">
+				<li ng-show="(sources==null || sources.length <= 0)"><a href="#" class="noItems">No Sources Available...</a></li>
+				<li ng-model="selectedSource" ng-class="{'selected':entry.id === selectedSource.id }" ng-repeat="entry in sources | orderBy:'name'" ng-click="selectSource()" >
+					<a href="#" title="{{entry.name}}">
+						<img class="List" ng-src="{{entry.image}}" fallback-src="https://markizatv.github.io/vizstvfs/fsplugins/images/icons/NotFound.png" />
+						<div class="entryTitle">{{entry.name}}</div>
+						<span class="defaultItem" ng-show="entry.id == selectedSource.id">DEFAULT</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a>GROUPS</a>
+			<ul type='group' class="groupsList">
+				<li ng-show="(groups==null || groups.length <= 0)"><a href="#" class="noItems">No Groups Available...</a></li>
+				<li class="subitem1" ng-model="selectedGroup" ng-class="{'selected':entry.id === selectedGroup.id }" ng-repeat="entry in groups" ng-click="selectGroup()">
+					<a href="#" title="{{entry.name}}">
+						<img class="List" ng-src="{{entry.image}}" fallback-src="https://markizatv.github.io/vizstvfs/fsplugins/images/icons/NotFound.png" />
+						<div class="entryTitle">{{entry.name}}</div>
+						<span class="defaultItem" ng-show="entry.id == selectedGroup.id">DEFAULT</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul class="menu" ng-show="editMode">
+		<li>
+			<span id="version"></span>
+		</li>
+	</ul>
 </div>
