@@ -1,0 +1,165 @@
+<div id="wrapper" ng-controller="stv_main_ctr" style="display:none;">
+	<ul class="menu" id="captionSection" title="">
+		<li>
+			<a id="TopPanel">Vizrt Viz Feed Streamer 
+				<img class="setting" src="images\gear.png" ng-click="editSettings()"/>
+			</a>
+		</li>
+	</ul>
+	
+	<ul class="menu settingsBlock" ng-class="settingsScreenState" ng-show="editMode">
+		<li>
+			<a style="display: -webkit-box;">
+				DATAHUB 
+				<div class="notConnected" ng-show="!dataHubAvailable">(No Connection)</div>
+				<img class="Connection connectionNo" ng-show="!dataHubAvailable" src="images\Disconnected.png" title="No connection to DataHub"/>
+				<img class="Connection connectionOk" ng-show="dataHubAvailable" src="images\Connected.png" title="Connected to DataHub"/>
+			</a>
+            <ul>
+                <li>
+					<a>
+						<div>
+							Host 
+							<input type="text" id="dhUriHost" class="host" placeholder="Host" ng-model="dataHubUriHost" ng-trim="true" ng-class="{error: dataHubUriValid==false}" ng-disabled="settingsScreenState == 'readOnly'" />
+						</div>
+						<div style='margin-top:-6px;'>
+							Port 
+							<input type="text" id="dhUriPort" class="port" placeholder="Port" ng-model="dataHubUriPort" ng-trim="true" ng-class="{error: dataHubUriValid==false}" ng-disabled="settingsScreenState == 'readOnly'" />
+							<input type="button" class="button btnConnect" ng-click="connectDataHub()" ng-disabled="!dataHubUriValid" value="Connect" />
+							<input type="button" class="button btnChange" ng-click="changeSettings()" value="Change" />
+							<input type="button" class="button btnCancel" ng-click="cancel()" value="Cancel" />
+						</div>
+					</a>
+				</li>
+            </ul>
+        </li>
+		<li ng-controller="PlayoutController" ng-show="editMode">
+			<a style="display: -webkit-box;">
+				PLAYOUT 
+			</a>
+			<table>
+				<tr>
+					<td>
+						Host
+					</td>
+					<td>
+						<input class="trioText" ng-change="changeAddress()" type="text" placeholder="Host" ng-model="host" ng-trim="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Port
+					</td>
+					<td>
+						<input class="trioText" ng-change="changeAddress()" type="text" placeholder="Port" ng-model="port" ng-trim="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a/>
+					</td>
+					<td>
+						<a/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Profile 
+					</td>
+					<td>
+						<select class="trioCombo" ng-model="profile" ng-options="profile for profile in profiles">
+							<option value="">-- Select Profile --</option>
+						</select>
+					</td>
+				</tr>
+				<!-- 
+				<tr>
+					<td>
+						Channel 
+					</td>
+					<td>
+						<input class="trioText" type="text" placeholder="Channel" ng-model="channel" ng-trim="true"/>
+					</td>
+				</tr>
+				-->
+				<tr>
+					<td>
+						<a/>
+					</td>
+					<td>
+						<a/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Show 
+					</td>
+					<td>
+						<select class="trioCombo" ng-model="show" ng-options="show.link as show.title for show in shows" ng-change="changeShow()">
+							<option value="">-- Select Show --</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Template
+					</td>
+					<td>
+						<select class="trioCombo" ng-model="template" ng-options="template for template in templates">
+							<option value="">-- Select Template --</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a/>
+					</td>
+					<td>
+						<a/>
+					</td>
+				</tr>
+			</table>
+		</li>
+	</ul>
+	
+	<ul class="menu dataBlock" ng-show="!editMode">
+		<li>
+			<a>SPACES
+				<select name="spaces" id="spaces" ng-options="entry.name for entry in spaces | orderBy: 'name' track by entry.id" ng-model="selectedSpace" ng-change="spaceChanged()">
+					<option value="">All</option>
+				</select>
+			</a>
+		</li>
+		<li>
+			<a>SOURCES</a>
+			<ul type='source' class="sourcesList">
+				<li ng-show="sources==null"><a href="#">No sources.</a></li>
+				<li ng-model="selectedSource" ng-class="{'selected':entry.id === selectedSource.id }" ng-repeat="entry in sources | orderBy:'name'" ng-click="selectSource()" >
+					<a href="#">
+						<img class="List" src="{{entry.image}}"/>
+						{{entry.name}}
+						<span class="defaultItem" ng-show="entry.id == selectedSource.id">DEFAULT</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a>GROUPS</a>
+			<ul type='group' class="groupsList">
+				<li ng-show="groups==null"><a href="#">No groups.</a></li>
+				<li class="subitem1" ng-model="selectedGroup" ng-class="{'selected':entry.id === selectedGroup.id }" ng-repeat="entry in groups | orderBy:'name'" ng-click="selectGroup()">
+					<a href="#">
+						<img class="List" ng-src="{{entry.image}}"/>
+						{{entry.name}}
+						<span class="defaultItem" ng-show="entry.id == selectedGroup.id">DEFAULT</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul class="menu">
+		<li>
+			<a id="BottomPanel"></a>
+		</li>
+	</ul>
+</div>

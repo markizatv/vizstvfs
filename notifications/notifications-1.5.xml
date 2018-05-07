@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>Vizrt Social TV news feed</title>
+		<description>Here you will learn about new things, product updates, and any exciting news going on with Vizrt Social TV solution.</description>
+		<link>http://www.vizrt.com/solutions/social-tv-solution/</link>
+		<lastBuildDate>26 Sep 2017 09:23:00 GMT</lastBuildDate>
+		<item>
+			<description>
+Social TV 1.5 is out! Among the new features are support for Facebook reactions, a new Ticker Feed Service and web based control application, and support for Update Service (getting the latest social data on air).
+			</description>
+			<pubDate>26 Sep 2017 11:12:02 GMT</pubDate>
+			<guid>http://www.vizrt.com/socialize/69a52b37-445f-454f-8c81-09702e8c6885</guid>
+		</item>
+	</channel>
+</rss>
